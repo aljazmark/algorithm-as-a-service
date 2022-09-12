@@ -1,0 +1,59 @@
+char* insertionSort(char *arr, int n) 
+{   
+    int b = strlen(arr);
+    int* array = calloc(n,sizeof(int));
+    stringToIntArray(arr,array,n);
+    int i, element, j; 
+    for (i = 1; i < n; i++) { 
+        element = array[i]; j = i - 1; 
+        while (j >= 0 && array[j] > element) { 
+            array[j + 1] = array[j]; 
+        j = j - 1; 
+    } 
+    array[j + 1] = element; 
+    }
+    intArrayToString(arr,array,n,b);
+    free(array);
+    return arr;
+}
+void printIntArray(int *arr,int n){
+    printf("\n");
+    for(int i = 0;i<n;i++){
+        printf("%d ",arr[i]);
+    }
+    printf("\n");
+}
+void stringToIntArray(char *arr, int *iarr, int n){
+    char *tokens = strtok(arr," ");
+    int i = 0;
+    while(tokens != NULL){
+        iarr[i]=atoi(tokens);
+        tokens = strtok(NULL," ");
+        i++;
+    }
+}
+/* backup
+void intArrayToString(char *arr, int *iarr,int n,int b){
+    char* tmpstr = calloc(b+1,sizeof(char));
+    char* buffer = calloc(11,sizeof(char));
+    for(int i = 0; i<(n-1);i++){
+        snprintf(buffer,11,"%d ",iarr[i]);
+        strcat(tmpstr,buffer);
+    }
+    snprintf(buffer,11,"%d",iarr[n-1]);
+    strcat(tmpstr,buffer);
+    strcpy(arr,tmpstr);
+    free(tmpstr);
+    free(buffer);
+}
+*/
+void intArrayToString(char *arr, int *iarr,int n,int b){
+    char* buffer = calloc(11,sizeof(char));
+    snprintf(buffer,11,"%d",iarr[0]);
+    strcpy(arr,buffer);
+    for(int i = 1; i<n;i++){
+        snprintf(buffer,11," %d",iarr[i]);
+        strcat(arr,buffer);
+    }
+    free(buffer);
+}

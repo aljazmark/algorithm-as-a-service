@@ -1,0 +1,669 @@
+{
+	"info": {
+		"_postman_id": "fa2e3efc-5a23-4374-a429-f9217559a451",
+		"name": "AaaS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "registerUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"test\",\r\n    \"email\":\"test@test.com\",\r\n    \"password\":\"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://algo-algo.herokuapp.com/user",
+							"protocol": "https",
+							"host": [
+								"algo-algo",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LoginUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"test\",\r\n    \"password\": \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://algo-algo.herokuapp.com/user/login",
+							"protocol": "https",
+							"host": [
+								"algo-algo",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDkyNzA1MTMsInVzZXJfaWQiOiI1ZmVhMzM1MGNmODZkMGU4M2QxOTFjYWQiLCJ1c2VyX3VzZXJuYW1lIjoidGVzdCJ9.MsjQFoRYNrCJm10YMm6vITHosWI12ReAtPSIMisuMT0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://algo-algo.herokuapp.com/user/5fea3350cf86d0e83d191cad",
+							"protocol": "https",
+							"host": [
+								"algo-algo",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"user",
+								"5fea3350cf86d0e83d191cad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDkyNzA1MTMsInVzZXJfaWQiOiI1ZmVhMzM1MGNmODZkMGU4M2QxOTFjYWQiLCJ1c2VyX3VzZXJuYW1lIjoidGVzdCJ9.MsjQFoRYNrCJm10YMm6vITHosWI12ReAtPSIMisuMT0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://algo-algo.herokuapp.com/user/5fea3350cf86d0e83d191cad",
+							"protocol": "https",
+							"host": [
+								"algo-algo",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"user",
+								"5fea3350cf86d0e83d191cad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDkyNzA1MTMsInVzZXJfaWQiOiI1ZmVhMzM1MGNmODZkMGU4M2QxOTFjYWQiLCJ1c2VyX3VzZXJuYW1lIjoidGVzdCJ9.MsjQFoRYNrCJm10YMm6vITHosWI12ReAtPSIMisuMT0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"test02\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://algo-algo.herokuapp.com/user/5fbbab43a4c7d502688fe2c9",
+							"protocol": "https",
+							"host": [
+								"algo-algo",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"user",
+								"5fbbab43a4c7d502688fe2c9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Requests",
+			"item": [
+				{
+					"name": "DeleteRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDkyNzA1MTMsInVzZXJfaWQiOiI1ZmVhMzM1MGNmODZkMGU4M2QxOTFjYWQiLCJ1c2VyX3VzZXJuYW1lIjoidGVzdCJ9.MsjQFoRYNrCJm10YMm6vITHosWI12ReAtPSIMisuMT0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://algo-algo.herokuapp.com/request/5fea351fcf86d0e83d191cb0",
+							"protocol": "https",
+							"host": [
+								"algo-algo",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"request",
+								"5fea351fcf86d0e83d191cb0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDkyNzA1MTMsInVzZXJfaWQiOiI1ZmVhMzM1MGNmODZkMGU4M2QxOTFjYWQiLCJ1c2VyX3VzZXJuYW1lIjoidGVzdCJ9.MsjQFoRYNrCJm10YMm6vITHosWI12ReAtPSIMisuMT0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://algo-algo.herokuapp.com/request/5fea386d4fc30b90dd4bb46b",
+							"protocol": "https",
+							"host": [
+								"algo-algo",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"request",
+								"5fea386d4fc30b90dd4bb46b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NewRequestWithData",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDkyNzA1MTMsInVzZXJfaWQiOiI1ZmVhMzM1MGNmODZkMGU4M2QxOTFjYWQiLCJ1c2VyX3VzZXJuYW1lIjoidGVzdCJ9.MsjQFoRYNrCJm10YMm6vITHosWI12ReAtPSIMisuMT0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"parameters\":[\"pmed\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://algo-algo.herokuapp.com/request/plesnikrnd/5fea34b6cf86d0e83d191caf",
+							"protocol": "https",
+							"host": [
+								"algo-algo",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"request",
+								"plesnikrnd",
+								"5fea34b6cf86d0e83d191caf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NewRequestPmed",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDkyNzA1MTMsInVzZXJfaWQiOiI1ZmVhMzM1MGNmODZkMGU4M2QxOTFjYWQiLCJ1c2VyX3VzZXJuYW1lIjoidGVzdCJ9.MsjQFoRYNrCJm10YMm6vITHosWI12ReAtPSIMisuMT0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"input\": \" 100 200 5   1 2 30   2 3 46   3 4 1   4 5 28   5 6 31   6 7 69   7 8 39   8 9 14   9 10 84   10 11 59   11 12 10   12 13 28   13 14 63   14 15 9   15 16 100   16 17 98   17 18 70   18 19 94   19 20 22   20 21 14   21 22 87   22 23 82   23 24 55   24 25 2   25 26 32   26 27 77   27 28 95   28 29 29   29 30 59   30 31 91   31 32 89   32 33 50   33 34 40   34 35 88   35 36 94   36 37 60   37 38 21   38 39 89   39 40 47   40 41 63   41 42 45   42 43 46   43 44 24   44 45 77   45 46 60   46 47 45   47 48 50   48 49 93   49 50 22   50 51 84   51 52 16   52 53 85   53 54 68   54 55 93   55 56 37   56 57 26   57 58 29   58 59 38   59 60 10   60 61 32   61 62 67   62 63 66   63 64 52   64 65 19   65 66 39   66 67 12   67 68 86   68 69 72   69 70 73   70 71 65   71 72 2   72 73 8   73 74 96   74 75 43   75 76 39   76 77 61   77 78 90   78 79 8   79 80 58   80 81 91   81 82 58   82 83 13   83 84 79   84 85 59   85 86 28   86 87 46   87 88 24   88 89 63   89 90 81   90 91 14   91 92 52   92 93 64   93 94 75   94 95 71   95 96 51   96 97 75   97 98 57   98 99 31   99 100 49   100 1 88   80 5 90   85 69 51   20 19 30   85 13 22   81 95 54   58 73 37   64 51 89   39 76 89   13 8 77   91 76 51   52 95 96   91 75 33   80 91 84   35 80 46   54 86 35   30 70 5   19 7 9   74 53 50   11 37 4   19 92 70   62 94 96   60 52 34   24 59 63   42 45 68   19 60 53   60 27 86   15 50 31   38 18 27   81 30 99   1 29 6   22 52 11   54 59 75   5 7 8   41 44 80   41 76 42   44 12 56   61 65 73   20 93 35   9 99 28   45 68 19   16 79 96   13 42 3   68 4 28   58 17 60   21 81 34   35 7 7   21 14 82   26 32 26   6 63 83   31 69 53   91 78 32   45 59 33   42 57 5   8 53 66   65 94 61   94 90 63   73 33 88   39 21 59   42 85 34   30 57 37   34 94 52   62 38 56   26 29 20   48 98 53   4 33 45   31 63 82   8 52 31   37 81 14   50 27 16   27 14 48   88 33 8   56 30 76   87 91 17   33 49 77   70 30 74   25 99 19   95 30 96   14 85 90   49 8 96   96 5 87   73 4 41   99 32 35   95 1 31   99 3 49   18 75 100   58 47 68   35 60 5   38 16 70   54 40 52   95 55 47   54 17 45   9 83 75   97 66 81   9 48 92   90 95 96   4 27 27   75 22 48   62 7 55   79 3 57   15 69 46 \",\r\n    \"parameters\": [\"pmed\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://algo-algo.herokuapp.com/request/plesnikrnd",
+							"protocol": "https",
+							"host": [
+								"algo-algo",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"request",
+								"plesnikrnd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NewRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDkyNzA1MTMsInVzZXJfaWQiOiI1ZmVhMzM1MGNmODZkMGU4M2QxOTFjYWQiLCJ1c2VyX3VzZXJuYW1lIjoidGVzdCJ9.MsjQFoRYNrCJm10YMm6vITHosWI12ReAtPSIMisuMT0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"input\": \" 10,11241, -2424, 0, 11, 1 , 704,-4\",\r\n    \"parameters\": [\"descending\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://algo-algo.herokuapp.com/request/QuickSort",
+							"protocol": "https",
+							"host": [
+								"algo-algo",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"request",
+								"QuickSort"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetRequestsByUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDkyNzA1MTMsInVzZXJfaWQiOiI1ZmVhMzM1MGNmODZkMGU4M2QxOTFjYWQiLCJ1c2VyX3VzZXJuYW1lIjoidGVzdCJ9.MsjQFoRYNrCJm10YMm6vITHosWI12ReAtPSIMisuMT0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://algo-algo.herokuapp.com/request/user/5fea3350cf86d0e83d191cad",
+							"protocol": "https",
+							"host": [
+								"algo-algo",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"request",
+								"user",
+								"5fea3350cf86d0e83d191cad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NewRequestPajek",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDkyNzA1MTMsInVzZXJfaWQiOiI1ZmVhMzM1MGNmODZkMGU4M2QxOTFjYWQiLCJ1c2VyX3VzZXJuYW1lIjoidGVzdCJ9.MsjQFoRYNrCJm10YMm6vITHosWI12ReAtPSIMisuMT0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"input\": \"[General] Name=New graph Date=21.1.2004 [Nodes] (N0, [0,0], [74,17]) (N1, [10,0], [55,64]) (N2, [6,20], [90,71]) (N3, [0,10], [19,64]) (N4, [10,20], [72,50]) (N5, [10,10], [67,41]) (N6, [20,10], [91,13]) (N7, [20,0], [48,86]) (N8, [20,20], [58,81]) (N9, [0,20], [73,53]) [Edges] (E0, [3,5], [35,68]) (E1, [5,7], [97,38]) (E2, [1,3], [55,37]) (E3, [0,1], [69,48]) (E4, [6,4], [8,100]) (E5, [1,7], [85,86]) (E6, [9,3], [42,9]) (E7, [2,9], [29,45]) (E8, [7,6], [78,62]) (E9, [6,8], [86,48])\",\r\n  \"parameters\":[\"graph\",\"3\"]\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://algo-algo.herokuapp.com/request/plesnikrnd",
+							"protocol": "https",
+							"host": [
+								"algo-algo",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"request",
+								"plesnikrnd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NewRequestGraph",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDkyNzA1MTMsInVzZXJfaWQiOiI1ZmVhMzM1MGNmODZkMGU4M2QxOTFjYWQiLCJ1c2VyX3VzZXJuYW1lIjoidGVzdCJ9.MsjQFoRYNrCJm10YMm6vITHosWI12ReAtPSIMisuMT0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"input\": \"*vertices 100 *arcs 1 2 30 2 3 46 3 4 1 4 5 28 5 6 31 6 7 69 7 8 39 8 9 14 9 10 84 10 11 59 11 12 10 12 13 28 13 14 63 14 15 9 15 16 100 16 17 98 17 18 70 18 19 94 19 20 22 20 21 14 21 22 87 22 23 82 23 24 55 24 25 2 25 26 32 26 27 77 27 28 95 28 29 29 29 30 59 30 31 91 31 32 89 32 33 50 33 34 40 34 35 88 35 36 94 36 37 60 37 38 21 38 39 89 39 40 47 40 41 63 41 42 45 42 43 46 43 44 24 44 45 77 45 46 60 46 47 45 47 48 50 48 49 93 49 50 22 50 51 84 51 52 16 52 53 85 53 54 68 54 55 93 55 56 37 56 57 26 57 58 29 58 59 38 59 60 10 60 61 32 61 62 67 62 63 66 63 64 52 64 65 19 65 66 39 66 67 12 67 68 86 68 69 72 69 70 73 70 71 65 71 72 2 72 73 8 73 74 96 74 75 43 75 76 39 76 77 61 77 78 90 78 79 8 79 80 58 80 81 91 81 82 58 82 83 13 83 84 79 84 85 59 85 86 28 86 87 46 87 88 24 88 89 63 89 90 81 90 91 14 91 92 52 92 93 64 93 94 75 94 95 71 95 96 51 96 97 75 97 98 57 98 99 31 99 100 49 100 1 88 80 5 90 85 69 51 20 19 30 85 13 22 81 95 54 58 73 37 64 51 89 39 76 89 13 8 77 91 76 51 52 95 96 91 75 33 80 91 84 35 80 46 54 86 35 30 70 5 19 7 9 74 53 50 11 37 4 19 92 70 62 94 96 60 52 34 24 59 63 42 45 68 19 60 53 60 27 86 15 50 31 38 18 27 81 30 99 1 29 6 22 52 11 54 59 75 5 7 8 41 44 80 41 76 42 44 12 56 61 65 73 20 93 35 9 99 28 45 68 19 16 79 96 13 42 3 68 4 28 58 17 60 21 81 34 35 7 7 21 14 82 26 32 26 6 63 83 31 69 53 91 78 32 45 59 33 42 57 5 8 53 66 65 94 61 94 90 63 73 33 88 39 21 59 42 85 34 30 57 37 34 94 52 62 38 56 26 29 20 48 98 53 4 33 45 31 63 82 8 52 31 37 81 14 50 27 16 27 14 48 88 33 8 56 30 76 87 91 17 33 49 77 70 30 74 25 99 19 95 30 96 14 85 90 49 8 96 96 5 87 73 4 41 99 32 35 95 1 31 99 3 49 18 75 100 58 47 68 35 60 5 38 16 70 54 40 52 95 55 47 54 17 45 9 83 75 97 66 81 9 48 92 90 95 96 4 27 27 75 22 48 62 7 55 79 3 57 15 69 46 \",\r\n  \"parameters\":[\"pajek\",\"5\"]\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://algo-algo.herokuapp.com/request/plesnikrnd",
+							"protocol": "https",
+							"host": [
+								"algo-algo",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"request",
+								"plesnikrnd"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Datas",
+			"item": [
+				{
+					"name": "AddData",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDkyNzA1MTMsInVzZXJfaWQiOiI1ZmVhMzM1MGNmODZkMGU4M2QxOTFjYWQiLCJ1c2VyX3VzZXJuYW1lIjoidGVzdCJ9.MsjQFoRYNrCJm10YMm6vITHosWI12ReAtPSIMisuMT0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\":\" 100 200 5   1 2 30   2 3 46   3 4 1   4 5 28   5 6 31   6 7 69   7 8 39   8 9 14   9 10 84   10 11 59   11 12 10   12 13 28   13 14 63   14 15 9   15 16 100   16 17 98   17 18 70   18 19 94   19 20 22   20 21 14   21 22 87   22 23 82   23 24 55   24 25 2   25 26 32   26 27 77   27 28 95   28 29 29   29 30 59   30 31 91   31 32 89   32 33 50   33 34 40   34 35 88   35 36 94   36 37 60   37 38 21   38 39 89   39 40 47   40 41 63   41 42 45   42 43 46   43 44 24   44 45 77   45 46 60   46 47 45   47 48 50   48 49 93   49 50 22   50 51 84   51 52 16   52 53 85   53 54 68   54 55 93   55 56 37   56 57 26   57 58 29   58 59 38   59 60 10   60 61 32   61 62 67   62 63 66   63 64 52   64 65 19   65 66 39   66 67 12   67 68 86   68 69 72   69 70 73   70 71 65   71 72 2   72 73 8   73 74 96   74 75 43   75 76 39   76 77 61   77 78 90   78 79 8   79 80 58   80 81 91   81 82 58   82 83 13   83 84 79   84 85 59   85 86 28   86 87 46   87 88 24   88 89 63   89 90 81   90 91 14   91 92 52   92 93 64   93 94 75   94 95 71   95 96 51   96 97 75   97 98 57   98 99 31   99 100 49   100 1 88   80 5 90   85 69 51   20 19 30   85 13 22   81 95 54   58 73 37   64 51 89   39 76 89   13 8 77   91 76 51   52 95 96   91 75 33   80 91 84   35 80 46   54 86 35   30 70 5   19 7 9   74 53 50   11 37 4   19 92 70   62 94 96   60 52 34   24 59 63   42 45 68   19 60 53   60 27 86   15 50 31   38 18 27   81 30 99   1 29 6   22 52 11   54 59 75   5 7 8   41 44 80   41 76 42   44 12 56   61 65 73   20 93 35   9 99 28   45 68 19   16 79 96   13 42 3   68 4 28   58 17 60   21 81 34   35 7 7   21 14 82   26 32 26   6 63 83   31 69 53   91 78 32   45 59 33   42 57 5   8 53 66   65 94 61   94 90 63   73 33 88   39 21 59   42 85 34   30 57 37   34 94 52   62 38 56   26 29 20   48 98 53   4 33 45   31 63 82   8 52 31   37 81 14   50 27 16   27 14 48   88 33 8   56 30 76   87 91 17   33 49 77   70 30 74   25 99 19   95 30 96   14 85 90   49 8 96   96 5 87   73 4 41   99 32 35   95 1 31   99 3 49   18 75 100   58 47 68   35 60 5   38 16 70   54 40 52   95 55 47   54 17 45   9 83 75   97 66 81   9 48 92   90 95 96   4 27 27   75 22 48   62 7 55   79 3 57   15 69 46 \"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://algo-algo.herokuapp.com/data",
+							"protocol": "https",
+							"host": [
+								"algo-algo",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateData",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDkyNzA1MTMsInVzZXJfaWQiOiI1ZmVhMzM1MGNmODZkMGU4M2QxOTFjYWQiLCJ1c2VyX3VzZXJuYW1lIjoidGVzdCJ9.MsjQFoRYNrCJm10YMm6vITHosWI12ReAtPSIMisuMT0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"allowed\":[\"0\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://algo-algo.herokuapp.com/data/5fea3424cf86d0e83d191cae",
+							"protocol": "https",
+							"host": [
+								"algo-algo",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"data",
+								"5fea3424cf86d0e83d191cae"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetData",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDkyNzA1MTMsInVzZXJfaWQiOiI1ZmVhMzM1MGNmODZkMGU4M2QxOTFjYWQiLCJ1c2VyX3VzZXJuYW1lIjoidGVzdCJ9.MsjQFoRYNrCJm10YMm6vITHosWI12ReAtPSIMisuMT0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://algo-algo.herokuapp.com/data/5fea3424cf86d0e83d191cae",
+							"protocol": "https",
+							"host": [
+								"algo-algo",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"data",
+								"5fea3424cf86d0e83d191cae"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetDatasByUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDkyNzA1MTMsInVzZXJfaWQiOiI1ZmVhMzM1MGNmODZkMGU4M2QxOTFjYWQiLCJ1c2VyX3VzZXJuYW1lIjoidGVzdCJ9.MsjQFoRYNrCJm10YMm6vITHosWI12ReAtPSIMisuMT0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://algo-algo.herokuapp.com/data/user/5fea3350cf86d0e83d191cad",
+							"protocol": "https",
+							"host": [
+								"algo-algo",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"data",
+								"user",
+								"5fea3350cf86d0e83d191cad"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Help",
+			"item": [
+				{
+					"name": "GetAlgorithms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://algo-algo.herokuapp.com/help/algorithms",
+							"protocol": "https",
+							"host": [
+								"algo-algo",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"help",
+								"algorithms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAlgorithmHelp",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://algo-algo.herokuapp.com/help/QuickSort",
+							"protocol": "https",
+							"host": [
+								"algo-algo",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"help",
+								"QuickSort"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

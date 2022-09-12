@@ -1,0 +1,21 @@
+----------------------------
+"samples/50.graph"
+Bruteforcing 3-center
+Best score: 120 with centers:
+4 9 35
+----------------------------
+"samples/sample50.graph"
+Bruteforcing 4-center
+Best score: 97 with centers:
+0 7 14 39
+----------------------------
+"samples/50.graph"
+Bruteforcing 5-center
+Best score: 94 with centers:
+1 7 16 19 41
+----------------------------
+"samples/50.graph"
+Bruteforcing 6-center
+Best score: 82 with centers:
+1 19 41 44 47 49
+----------------------------

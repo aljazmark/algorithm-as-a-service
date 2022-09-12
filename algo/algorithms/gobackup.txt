@@ -1,0 +1,283 @@
+/*
+func splitBy(r rune) bool {
+	return r == ',' || r == '\\'
+}
+func runBubbleSort(numArray []int32, nums int) ([]int32, string, error) {
+	log.Println("BUBBLE IN C WITH INTEGERS")
+	arrayPointer := unsafe.Pointer(&numArray[0])
+	start := time.Now()
+	C.bubbleSort((*C.int)(arrayPointer), C.int(nums))
+	executionTime := time.Since(start)
+	return numArray, executionTime.String(), nil
+}
+func runQuickSort(numArray []int32, nums int) ([]int32, string, error) {
+	log.Println("QUICK IN C WITH INTEGERS")
+	arrayPointer := unsafe.Pointer(&numArray[0])
+	start := time.Now()
+	C.quickSort((*C.int)(arrayPointer), C.int(0), C.int(nums-1))
+	executionTime := time.Since(start)
+	return numArray, executionTime.String(), nil
+}
+func runMergeSort(numArray []int32, nums int) ([]int32, string, error) {
+	log.Println("MERGE IN C WITH INTEGERS")
+	arrayPointer := unsafe.Pointer(&numArray[0])
+	start := time.Now()
+	C.mergeSort((*C.int)(arrayPointer), C.int(0), C.int(nums-1))
+	executionTime := time.Since(start)
+	return numArray, executionTime.String(), nil
+}
+func runSelectionSort(numArray []int32, nums int) ([]int32, string, error) {
+	log.Println("SELECTION IN C WITH INTEGERS")
+	arrayPointer := unsafe.Pointer(&numArray[0])
+	start := time.Now()
+	C.selectionSort((*C.int)(arrayPointer), C.int(nums))
+	executionTime := time.Since(start)
+	return numArray, executionTime.String(), nil
+}
+func runInsertionSort(numArray []int32, nums int) ([]int32, string, error) {
+	log.Println("INSERTION IN C WITH INTEGERS")
+	arrayPointer := unsafe.Pointer(&numArray[0])
+	start := time.Now()
+	C.insertionSort((*C.int)(arrayPointer), C.int(nums))
+	executionTime := time.Since(start)
+	return numArray, executionTime.String(), nil
+}
+
+func runAddition(a, b float32) (float32, error) {
+	aC := C.float(a)
+	bC := C.float(b)
+
+	sum, err := C.addition(aC, bC)
+	if err != nil {
+		return 0, errors.New("error calling Sum function: " + err.Error())
+	}
+	res := float32(sum)
+	return res, nil
+}
+
+func runInsertionSort2(numArray string, nums int, chars int) (string, string, error) {
+	log.Println("RUNNING IN C WITH STRINGS")
+	tmpres := C.CString(numArray)
+	defer C.free(unsafe.Pointer(tmpres))
+	start := time.Now()
+	C.insertionSort(tmpres, C.int(nums))
+	executionTime := time.Since(start)
+	gostring := C.GoStringN(tmpres, C.int(chars))
+	return gostring, fmt.Sprint(executionTime.String()), nil
+}
+
+func runInsertionSortGO(numArray []int32, nums int) (string, string, error) {
+	log.Println("RUNNING IN GO")
+	start := time.Now()
+	tmpres := insertionSortGO(numArray)
+	executionTime := time.Since(start)
+	return fmt.Sprint(tmpres), fmt.Sprint(executionTime.String()), nil
+}
+
+func insertionSortGO(array []int32) []int32 {
+	var i int
+	var element int32
+	var j int
+	for i = 1; i < len(array); i++ {
+		element = array[i]
+		j = i - 1
+		for j >= 0 && array[j] > element {
+			array[j+1] = array[j]
+			j = j - 1
+		}
+		array[j+1] = element
+	}
+	return array
+}
+*/
+/*tfile, err := ioutil.TempFile("", "graph")
+		if err != nil {
+			result.Output = err.Error()
+
+			return result
+		}
+		defer os.Remove(tfile.Name())
+		if request.Parameters.Format == "pmed" {
+			stringLines := strings.Replace(request.Input, "\n", " ", -1)
+			reg := regexp.MustCompile(`(\w+) (\w+) (\w+)`)
+			stringLines = reg.ReplaceAllString(stringLines, "$0\n")
+			tfile.WriteString(stringLines)
+			err = os.Chmod(tfile.Name(), 0777)
+			if err != nil {
+				result.Output = "Error parsing input, please refer to documentation"
+				return result
+			}
+		} else if request.Parameters.Format == "graph" {
+			if request.Parameters.Centers == "" {
+				result.Output = "Number of centers missing, please refer to documentation"
+				return result
+			}
+			reg := regexp.MustCompile(`(.*?)(\[[ Nodes ^\]]*\].*)(\[[ Edges ^\]]*\].*)`)
+			stringLines := reg.FindAllStringSubmatch(request.Input, -1)
+			tfile.WriteString(stringLines[0][1])
+			reg = regexp.MustCompile(`(\(.*?\))`)
+			stringLine := reg.ReplaceAllString(stringLines[0][2], "\n$1")
+			tfile.WriteString("\n" + stringLine)
+			stringLine = reg.ReplaceAllString(stringLines[0][3], "\n$1")
+			tfile.WriteString("\n" + stringLine)
+			err = os.Chmod(tfile.Name(), 0777)
+			if err != nil {
+				result.Output = "Error parsing input, please refer to documentation"
+				return result
+			}
+		} else if request.Parameters.Format == "pajek" {
+			if request.Parameters.Centers == "" {
+				result.Output = "Number of centers missing, please refer to documentation"
+				return result
+			}
+			reg := regexp.MustCompile(`(\*vertices\s\d*)\s*(\*arcs)\s*(.*$)`)
+			stringLines := reg.FindAllStringSubmatch(request.Input, -1)
+			tfile.WriteString(stringLines[0][1] + "\n")
+			tfile.WriteString(stringLines[0][2] + "\n")
+			reg = regexp.MustCompile(`(\w+) (\w+) (\w+)`)
+			stringLine := reg.ReplaceAllString(stringLines[0][3], "$0\n")
+			tfile.WriteString(stringLine)
+		} else {
+			result.Output = "Format not specified/available, please refer to documentation"
+			return result
+		}
+		if request.Parameters.Format == "pmed" {
+			cmd := exec.Command("./main", "-i", tfile.Name(), "-m", alg, "-f", request.Parameters.Format)
+			b, err := cmd.CombinedOutput()
+			if err != nil {
+				result.Output = "Error executing algorithm: " + err.Error()
+				return result
+			}
+			st := fmt.Sprintf("%s", b)
+			re := regexp.MustCompile(`\r?\n`)
+			st = re.ReplaceAllString(st, "")
+			var outs []string = strings.Split(st, ",")
+			result.Output = outs[0]
+			result.ExecutionTime = outs[1] + "ms"
+		} else if request.Parameters.Format == "graph" {
+			cmd := exec.Command("./main", "-i", tfile.Name(), "-m", alg, "-f", request.Parameters.Format, "-c", request.Parameters.Centers)
+			b, err := cmd.CombinedOutput()
+			if err != nil {
+				result.Output = "Error executing algorithm: " + err.Error()
+				return result
+			}
+			st := fmt.Sprintf("%s", b)
+			re := regexp.MustCompile(`\r?\n`)
+			st = re.ReplaceAllString(st, "")
+			var outs []string = strings.Split(st, ",")
+			result.Output = outs[0]
+			result.ExecutionTime = outs[1] + "ms"
+		} else if request.Parameters.Format == "pajek" {
+			cmd := exec.Command("./main", "-i", tfile.Name(), "-m", alg, "-f", request.Parameters.Format, "-c", request.Parameters.Centers)
+			b, err := cmd.CombinedOutput()
+			if err != nil {
+				result.Output = "Error executing algorithm: " + err.Error()
+				return result
+			}
+			st := fmt.Sprintf("%s", b)
+			re := regexp.MustCompile(`\r?\n`)
+			st = re.ReplaceAllString(st, "")
+			var outs []string = strings.Split(st, ",")
+			result.Output = outs[0]
+			result.ExecutionTime = outs[1] + "ms"
+		}
+		*/
+        /*
+		case "Test":
+			//par := struct {
+			//	format string `json:"format"`
+			//	k      string `json:"k,omitempty"`
+			//	}{}
+		case "InsertionSort":
+			var numArray []int32
+			var numArrayStr string
+			err := json.Unmarshal([]byte("["+request.Input+"]"), &numArray)
+			if err != nil {
+				result.Output = err.Error()
+				return result
+			}
+			if len(numArray) == 0 {
+				result.Output = ""
+				return result
+			}
+			len1 := len(numArray)
+			numArrayStr = fmt.Sprint(numArray)
+			numArrayStr = numArrayStr[1:(len(numArrayStr) - 1)]
+			//resArray, time, err := runInsertionSort(numArrayStr, len1, len2)
+			//resArray, time, err := runInsertionSortGO(numArray, len1)
+			resArray, time, err := runInsertionSort(numArray, len1)
+			result.ExecutionTime = time
+			result.Output = fmt.Sprint(resArray)
+		case "BubbleSort":
+			var numArray []int32
+			err := json.Unmarshal([]byte("["+request.Input+"]"), &numArray)
+			if err != nil {
+				result.Output = err.Error()
+				return result
+			}
+			if len(numArray) == 0 {
+				result.Output = ""
+				return result
+			}
+			resArray, time, err := runBubbleSort(numArray, len(numArray))
+			if err != nil {
+				result.Output = err.Error()
+				return result
+			}
+			result.ExecutionTime = time
+			result.Output = fmt.Sprint(resArray)
+		case "SelectionSort":
+			var numArray []int32
+			err := json.Unmarshal([]byte("["+request.Input+"]"), &numArray)
+			if err != nil {
+				result.Output = err.Error()
+				return result
+			}
+			if len(numArray) == 0 {
+				result.Output = ""
+				return result
+			}
+			resArray, time, err := runSelectionSort(numArray, len(numArray))
+			if err != nil {
+				result.Output = err.Error()
+				return result
+			}
+			result.ExecutionTime = time
+			result.Output = fmt.Sprint(resArray)
+		case "QuickSort":
+			var numArray []int32
+			err := json.Unmarshal([]byte("["+request.Input+"]"), &numArray)
+			if err != nil {
+				result.Output = err.Error()
+				return result
+			}
+			if len(numArray) == 0 {
+				result.Output = ""
+				return result
+			}
+			resArray, time, err := runQuickSort(numArray, len(numArray))
+			if err != nil {
+				result.Output = err.Error()
+				return result
+			}
+			result.ExecutionTime = time
+			result.Output = fmt.Sprint(resArray)
+		case "MergeSort":
+			var numArray []int32
+			err := json.Unmarshal([]byte("["+request.Input+"]"), &numArray)
+			if err != nil {
+				result.Output = err.Error()
+				return result
+			}
+			if len(numArray) == 0 {
+				result.Output = ""
+				return result
+			}
+			resArray, time, err := runMergeSort(numArray, len(numArray))
+			if err != nil {
+				result.Output = err.Error()
+				return result
+			}
+			result.ExecutionTime = time
+			result.Output = fmt.Sprint(resArray)
+	*/

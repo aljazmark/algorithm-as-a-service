@@ -1,0 +1,1726 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Algo API",
+    "description": "Documentation for Algo API. REST API service, offering algorithm execution on request. Additionaly, input data can be saved to the service and used again. Most paths require a user account, which is managed through the API aswell.",
+    "version": "1.0",
+    "x-logo": {
+      "url": ""
+    }
+  },
+  "servers": [
+    {
+      "url": "https://algo-algo.herokuapp.com/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "request"
+    },
+    {
+      "name": "user"
+    },
+    {
+      "name": "data"
+    },
+    {
+      "name": "help"
+    }
+  ],
+  "paths": {
+    "/request/{algorithm}": {
+      "post": {
+        "tags": [
+          "request"
+        ],
+        "summary": "Returns the result of requested algorithm",
+        "description": "Used for making algorithm requests. Can be called with or without authentication. If called with authentication, result is assigned to the user.",
+        "operationId": "requestAlgorithm",
+        "parameters": [
+          {
+            "name": "algorithm",
+            "in": "path",
+            "description": "Name of the requested algorithm",
+            "required": true,
+            "deprecated": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "quickSort"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Request"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Error parsing input"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Error running algorithm"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {},
+          {
+            "JWTAuth": []
+          }
+        ]
+      }
+    },
+    "/request/{algorithm}/{data_id}": {
+      "post": {
+        "tags": [
+          "request"
+        ],
+        "summary": "Returns the result of requested algorithm with saved data",
+        "description": "Used for making algorithm requests with input data, saved in the database. Parameters must be provided in the body, if not, an empty array is used.",
+        "operationId": "requestAlgorithmWithDataByID",
+        "parameters": [
+          {
+            "name": "algorithm",
+            "in": "path",
+            "description": "Name of the requested algorithm",
+            "required": true,
+            "deprecated": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "quickSort"
+          },
+          {
+            "name": "data_id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "5f3348e14d9b386e025681a1"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "parameters": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "parameters": [
+                    "descending"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Request"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Error parsing input"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid or expired jwt"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Error running algorithm"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ]
+      }
+    },
+    "/request/{request_id}": {
+      "get": {
+        "tags": [
+          "request"
+        ],
+        "summary": "Returns the request",
+        "description": "Used for fetching a request from the database. Can be used with or without authorization. Only unassigned requests (user id 000000000000000000000000) can be requested without authorization.",
+        "operationId": "getRequestByID",
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "5f3348e14d9b386e025681a1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Request"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid id"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Not authorized to access request"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Error running algorithm"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {},
+          {
+            "JWTAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "request"
+        ],
+        "summary": "Deletes the request",
+        "operationId": "deleteRequestByID",
+        "description": "Used for deleting a request from the database.",
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "5f3348e14d9b386e025681a1"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid id"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid or expired jwt"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Error running algorithm"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ]
+      }
+    },
+    "/request/user/{user_id}": {
+      "summary": "Get all requests for user",
+      "get": {
+        "tags": [
+          "request"
+        ],
+        "summary": "Returns all requests for user",
+        "description": "Used for fetching all requests of a user.",
+        "operationId": "getUserRequests",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "5f3348e14d9b386e025681a1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Request"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid id"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid or expired jwt"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Error running algorithm"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ]
+      }
+    },
+    "/user": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Creates a user",
+        "description": "Used for creating a user account, returns a JWT token.",
+        "operationId": "createUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "example": {
+                "username": "test",
+                "email": "test@test.com",
+                "password": "test"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/registration_response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid id"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Error running algorithm"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Returns an authentication token for user",
+        "description": "Used for authentication, returns a JWT token for further authentication.",
+        "operationId": "loginUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/login"
+              },
+              "example": {
+                "username": "test",
+                "password": "test"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/login_response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid id"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Error running algorithm"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{user_id}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Returns the user",
+        "description": "Used for fetching a user.",
+        "operationId": "getUser",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "5f3348e14d9b386e025681a1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user_response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid id"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid or expired jwt"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Error running algorithm"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Updates the user",
+        "description": "Used for updating a user. User can update username, email or password. Fields provided in request body will be updated.",
+        "operationId": "updateUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/user_update"
+              },
+              "example": {
+                "username": "test1",
+                "password": "test1",
+                "email": "test1"
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "5f3348e14d9b386e025681a1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid id"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid or expired jwt"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Error running algorithm"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Deletes the user",
+        "description": "Used for deleting a user.",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "5f3348e14d9b386e025681a1"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid id"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid or expired jwt"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Error running algorithm"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ]
+      }
+    },
+    "/data": {
+      "post": {
+        "tags": [
+          "data"
+        ],
+        "summary": "Creates the data",
+        "description": "Used for creating data.",
+        "operationId": "createData",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/data_body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Data_response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid id"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Not authorized to access data"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ]
+      }
+    },
+    "/data/{data_id}": {
+      "get": {
+        "tags": [
+          "data"
+        ],
+        "summary": "Returns the requested data",
+        "description": "Used for fetching data.",
+        "operationId": "getData",
+        "parameters": [
+          {
+            "name": "data_id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "5f3348e14d9b386e025681a1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Data_response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid id"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Not authorized to access data"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Error running algorithm"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "data"
+        ],
+        "summary": "Updates the data",
+        "description": "Used for updating data. User can update data and allowed field. Allowed is used for authorizing other users to use your data. Array has to include their user id. Id \"000000000000000000000000\" allows every user to access data.",
+        "operationId": "updateData",
+        "parameters": [
+          {
+            "name": "data_id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "5f3348e14d9b386e025681a1"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/data_update"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Data_response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid id"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Not authorized to access data"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "data"
+        ],
+        "summary": "Deletes the data",
+        "description": "Used for deleting data.",
+        "operationId": "deleteData",
+        "parameters": [
+          {
+            "name": "data_id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "5f3348e14d9b386e025681a1"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid id"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Not authorized to access data"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ]
+      }
+    },
+    "/data/user/{user_id}": {
+      "post": {
+        "tags": [
+          "data"
+        ],
+        "summary": "Returns all data for user",
+        "description": "Used for creating data.",
+        "operationId": "getUserData",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "5f3348e14d9b386e025681a1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Data_response"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid id"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Not authorized to access data"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ]
+      }
+    },
+    "/help/algorithms": {
+      "get": {
+        "tags": [
+          "help"
+        ],
+        "summary": "Returns all available algorithms.",
+        "description": "Used for getting a list of all algorithms.",
+        "operationId": "getAlgorithms",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "example": [
+                  "InsertionSort",
+                  "BubbleSort",
+                  "SelectionSort",
+                  "QuickSort",
+                  "MergeSort"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/help/algorithms/{algorithm}": {
+      "get": {
+        "tags": [
+          "help"
+        ],
+        "summary": "Returns details about algorithm.",
+        "description": "Used for getting a details about an algorithm. Includes examples of input, parameters and output.",
+        "operationId": "getAlgorithmDetails",
+        "parameters": [
+          {
+            "name": "algorithm",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "QuickSort"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "algorithm": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "inputFormat": {
+                      "type": "string"
+                    },
+                    "inputExample": {
+                      "type": "string"
+                    },
+                    "descriptionFormat": {
+                      "type": "string"
+                    },
+                    "parametersExample": {
+                      "type": "string"
+                    },
+                    "outputFormat": {
+                      "type": "string"
+                    },
+                    "outputExample": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "algorithm": "QuickSort",
+                    "category": "SortingAlgorithm",
+                    "description": "Sorts an array of numbers in the selected order.",
+                    "inputFormat": "Input has to be a sequence of whole numbers, seprated by a comma (,).",
+                    "inputExample": "10,-3,123,5000,0",
+                    "parametersFormat": "Parameter 1: Sorting order; Options: 'ascending', 'descending'; Default: 'ascending'",
+                    "parametersExample": "['ascending']",
+                    "outputFormat": "A sequence of ordered numbers is returned, separated by spaces",
+                    "outputExample": "-3 0 10 123 5000"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Algorithm not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Request": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "algorithm": {
+            "type": "string"
+          },
+          "input": {
+            "type": "string"
+          },
+          "parameters": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "output": {
+            "type": "string"
+          },
+          "requested": {
+            "type": "string"
+          },
+          "completed": {
+            "type": "string"
+          },
+          "executionTime": {
+            "type": "string"
+          },
+          "user": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "id": "5fe9817753590b33f7a82d62",
+          "algorithm": "SelectionSort",
+          "input": "3,0,33,11,2202,-200",
+          "parameters": [
+            "descending"
+          ],
+          "requested": "2020-12-28T07:58:16+01:00",
+          "completed": "2020-12-28T07:58:17+01:00",
+          "executionTime": "0s",
+          "user": "000000000000000000000000"
+        }
+      },
+      "Error": {
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Error message indicating the issue"
+          }
+        },
+        "example": {
+          "message": "User not found"
+        }
+      },
+      "User": {
+        "required": [
+          "email",
+          "password",
+          "username"
+        ],
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "username": "test",
+          "email": "test@test.com",
+          "password": "test"
+        }
+      },
+      "Data_response": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          },
+          "user": {
+            "type": "string"
+          },
+          "allowed": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "created": {
+            "type": "string"
+          },
+          "updated": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "id": "5f3348e14d9b386e025681a1",
+          "data": "-3,6,1,7",
+          "user": "5f330a4df21982980282af97",
+          "allowed": [
+            "000000000000000000000000",
+            "5fe98a1453590b33f7a82d64"
+          ],
+          "created": "2020-12-20T03:57:51+01:00",
+          "updated": "2020-12-20T03:57:51+01:00"
+        }
+      },
+      "body": {
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "type": "string"
+          },
+          "parameters": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "example": {
+          "input": "3,0,33,11,2202,-200",
+          "parameters": [
+            "descending"
+          ]
+        }
+      },
+      "registration_response": {
+        "required": [
+          "created",
+          "email",
+          "id",
+          "username"
+        ],
+        "properties": {
+          "userID": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "userID": "5fe98a1453590b33f7a82d64",
+          "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDkxNDQzNTYsInVzZXJfaWQiOiI1ZmU5OGExNDUzNTkwYjMzZjdhODJkNjQiLCJ1c2VyX3VzZXJuYW1lIjoidGVzdCJ9.jgLcRffdVVsOzdfGDl09pcQXruEnpolNuyatPp8CflM",
+          "username": "test"
+        }
+      },
+      "login": {
+        "required": [
+          "password",
+          "username"
+        ],
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "username": "test",
+          "password": "test"
+        }
+      },
+      "user_update": {
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "username": "test1",
+          "password": "test1"
+        }
+      },
+      "login_response": {
+        "type": "object",
+        "properties": {
+          "userID": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "userID": "5fe98a1453590b33f7a82d64",
+          "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MDkxNDQzNTYsInVzZXJfaWQiOiI1ZmU5OGExNDUzNTkwYjMzZjdhODJkNjQiLCJ1c2VyX3VzZXJuYW1lIjoidGVzdCJ9.jgLcRffdVVsOzdfGDl09pcQXruEnpolNuyatPp8CflM",
+          "username": "test"
+        }
+      },
+      "user_response": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string"
+          },
+          "updated": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "id": "5fe98c87e557d8082eac6076",
+          "username": "test",
+          "email": "test@test.com",
+          "created": "2020-12-28T08:43:03+01:00",
+          "updates": "2020-12-28T08:43:03+01:00"
+        }
+      },
+      "data_body": {
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "data": "-3,6,1,7"
+        }
+      },
+      "data_update": {
+        "properties": {
+          "data": {
+            "type": "string"
+          },
+          "allowed": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "example": {
+          "data": "-3,6,1,7",
+          "allowed": [
+            "000000000000000000000000"
+          ]
+        }
+      }
+    },
+    "responses": {
+      "400": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "message": "Invalid id"
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "message": "Invalid or expired jwt"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal server error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "message": "Error running algorithm"
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "request_id": {
+        "name": "request_id",
+        "in": "path",
+        "required": true,
+        "deprecated": false,
+        "style": "simple",
+        "explode": false,
+        "schema": {
+          "type": "string"
+        },
+        "example": "5f3348e14d9b386e025681a1"
+      },
+      "user_id": {
+        "name": "user_id",
+        "in": "path",
+        "required": true,
+        "deprecated": false,
+        "style": "simple",
+        "explode": false,
+        "schema": {
+          "type": "string"
+        },
+        "example": "5f3348e14d9b386e025681a1"
+      },
+      "data_id": {
+        "name": "data_id",
+        "in": "path",
+        "required": true,
+        "deprecated": false,
+        "style": "simple",
+        "explode": false,
+        "schema": {
+          "type": "string"
+        },
+        "example": "5f3348e14d9b386e025681a1"
+      },
+      "algorithm": {
+        "name": "algorithm",
+        "in": "path",
+        "description": "Name of the requested algorithm",
+        "required": true,
+        "deprecated": false,
+        "style": "simple",
+        "explode": false,
+        "schema": {
+          "type": "string"
+        },
+        "example": "quickSort"
+      }
+    },
+    "securitySchemes": {
+      "JWTAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+basePath: /
+consumes:
+- application/json
+info:
+  description: Documentation for AlgoCore API
+  title: of AlgoCore API
+  version: 1.0.0
+paths:
+  /algorithm/:algorithm:
+    post:
+      description: Returns the result of a requested algorithm
+      operationId: runAlgorithm
+      responses:
+        "200":
+          $ref: '#/responses/AlgoResponse'
+      tags:
+      - algorithm
+produces:
+- application/json
+responses:
+  AlgoResponse:
+    headers:
+      algorithm:
+        type: string
+      executiontime:
+        type: string
+      parameters:
+        type: string
+      result:
+        type: string
+schemes:
+- http
+swagger: "2.0"

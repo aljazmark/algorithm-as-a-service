@@ -1,0 +1,19 @@
+FROM node:alpine as builder
+
+RUN mkdir /algoClient
+
+WORKDIR /algoClient
+COPY package.json ./
+
+RUN npm install 
+
+FROM node:alpine
+
+WORKDIR /algoClient
+
+COPY --from=builder /algoClient/dist ./dist
+COPY --from=builder /algoClient/node_modules ./node_modules
+
+EXPOSE 3030
+
+CMD ["npm","start"]
